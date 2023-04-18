@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Big Button Website</title>
+    <style>
+      #audio-btn {
+        font-size: 36px;
+        width: 400px;
+        height: 200px;
+        margin: 0 auto;
+        display: block;
+        background-color: #009688;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+      }
+
+      #character {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="audio-btn">Press me!</button>
+    <img id="character" src="" />
+
+    <script>
+      const audioBtn = document.getElementById("audio-btn");
+      const audio1 = new Audio("WGJ.opus");
+      const audio2 = new Audio("WGJ 2.mp3");
+
+      const images = [
+        "ZYZZ CAT TRUE FORM_1.1.1_3.1.1.png",
+        "Capybulkra.png",
+        "duxter.png",
+      ];
+      let currentImage = 0;
+      setInterval(() => {
+        document.getElementById("character").src = images[currentImage];
+        currentImage = (currentImage + 1) % images.length;
+      }, 2000);
+
+      audioBtn.addEventListener("click", () => {
+        const randomAudio = Math.random() < 0.5 ? audio1 : audio2;
+        randomAudio.play();
+      });
+    </script>
+  </body>
+</html>
