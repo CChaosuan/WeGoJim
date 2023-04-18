@@ -8,24 +8,21 @@
 			padding: 0;
 			background-color: white;
 			font-family: Arial, sans-serif;
-			overflow: hidden;
 		}
 
 		#audio-btn {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
 			display: block;
-			width: 300px;
-			height: 100px;
+			margin: 0 auto;
 			font-size: 3em;
+			padding: 50px;
+			border-radius: 10px;
 			background-color: blue;
 			color: white;
 			border: none;
-			border-radius: 10px;
-			font-family: Impact, sans-serif;
 			cursor: pointer;
+			font-family: Impact, Charcoal, sans-serif;
+			position: relative;
+			z-index: 1;
 		}
 
 		.image-container {
@@ -34,21 +31,24 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
+			overflow: hidden;
+			z-index: -1;
 		}
 
 		.image-container img {
 			position: absolute;
-			top: -100px;
-			width: 50px;
-			animation: drop 1s linear;
+			top: -50px;
+			animation: drop 1s linear forwards;
 		}
 
 		@keyframes drop {
 			from {
 				transform: translateY(-100px);
+				opacity: 0;
 			}
 			to {
 				transform: translateY(100%);
+				opacity: 1;
 			}
 		}
 	</style>
@@ -59,20 +59,39 @@
 
 	<script>
 		const audioBtn = document.getElementById("audio-btn");
-		const imageContainer = document.querySelector(".image-container");
-
-		const images = ["Capybulkra.png", "duxter.png", "ZYZZ CAT TRUE FORM_1.1.1_3.1.1.png"];
+		const audioFiles = ["WGJ.opus", "WGJ 2.mp3"];
 
 		audioBtn.addEventListener("click", () => {
-			for (let i = 0; i < 50; i++) {
+			const audioFile = audioFiles[Math.floor(Math.random() * audioFiles.length)];
+			const audio = new Audio(audioFile);
+			audio.play();
+
+			const imageContainer = document.querySelector(".image-container");
+			const numImages = 50;
+			for (let i = 0; i < numImages; i++) {
 				const img = document.createElement("img");
-				img.src = images[Math.floor(Math.random() * images.length)];
-				img.style.left = Math.random() * 100 + "%";
-				setTimeout(() => {
-					imageContainer.appendChild(img);
-				}, i * 20);
+				img.src = `https://raw.githubusercontent.com/CChaosuan/WGJ/main/${getImageName()}`;
+				img.style.width = "50px";
+				img.style.height = "50px";
+				img.style.left = `${getRandomPosition()}px`;
+				imageContainer.appendChild(img);
 			}
+
+			setTimeout(() => {
+				imageContainer.innerHTML = "";
+			}, 1000);
 		});
+
+		function getImageName() {
+			const images = ["Capybulkra.png", "duxter.png", "ZYZZ CAT TRUE FORM_1.1.1_3.1.1.png"];
+			const randomIndex = Math.floor(Math.random() * images.length);
+			return images[randomIndex];
+		}
+
+		function getRandomPosition() {
+			const bodyWidth = document.body.offsetWidth;
+			return Math.floor(Math.random() * bodyWidth);
+		}
 	</script>
 </body>
 </html>
