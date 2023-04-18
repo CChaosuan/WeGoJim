@@ -8,75 +8,63 @@
 			padding: 0;
 			background-color: white;
 			font-family: Arial, sans-serif;
-			height: 100vh;
 		}
 
 		#audio-btn {
 			display: block;
 			margin: 0 auto;
 			font-size: 3em;
-			padding: 20px 50px;
-			border-radius: 10px;
+			padding: 50px;
+			border-radius: 20px;
 			background-color: blue;
 			color: white;
 			border: none;
 			cursor: pointer;
-			font-family: Impact, sans-serif;
-			position: relative;
-			z-index: 1;
+			font-family: impact;
 		}
 
-		.image-container {
+		.falling-images {
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			z-index: 0;
+			animation: falling 2s ease-out;
+			animation-iteration-count: infinite;
 		}
 
-		.image-container img {
-			position: absolute;
-			top: -100px;
-			left: calc(10% + 80px * var(--i));
-			animation: drop 2s linear forwards;
-			animation-delay: calc(var(--i) * 0.1s);
-			transform: scale(0.5);
-			opacity: 0;
-		}
-
-		@keyframes drop {
-			to {
-				top: 110%;
+		@keyframes falling {
+			from {
+				transform: translateY(-200px);
 				opacity: 1;
+			}
+			to {
+				transform: translateY(100vh);
+				opacity: 0;
 			}
 		}
 	</style>
 </head>
 <body>
 	<button id="audio-btn">Jim?</button>
-	<div class="image-container">
-		<img src="Capybulkra.png" style="--i: 1;" />
-		<img src="duxter.png" style="--i: 2;" />
-		<img src="ZYZZ CAT TRUE FORM_1.1.1_3.1.1.png" style="--i: 3;" />
-	</div>
 
 	<script>
 		const audioBtn = document.getElementById("audio-btn");
 		const audioFiles = ["WGJ.opus", "WGJ 2.mp3"];
 
 		audioBtn.addEventListener("click", () => {
+			for (let i = 0; i < 10; i++) {
+				const img = document.createElement("img");
+				img.src = "Capybulkra.png";
+				img.className = "falling-images";
+				img.style.width = "50px";
+				img.style.left = `${Math.random() * 100}%`;
+				document.body.appendChild(img);
+
+				setTimeout(() => {
+					img.remove();
+				}, 2000);
+			}
+
 			const audioFile = audioFiles[Math.floor(Math.random() * audioFiles.length)];
 			const audio = new Audio(audioFile);
 			audio.play();
-			
-			for (let i = 1; i <= 3; i++) {
-				setTimeout(() => {
-					const img = document.querySelector(`.image-container img:nth-child(${i})`);
-					img.style.animationPlayState = "running";
-				}, i * 1000);
-			}
 		});
 	</script>
 </body>
