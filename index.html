@@ -1,56 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Big Button Website</title>
-    <style>
-      #audio-btn {
-        font-size: 36px;
-        width: 400px;
-        height: 200px;
-        margin: 0 auto;
-        display: block;
-        background-color: #009688;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-        cursor: pointer;
-      }
+<head>
+	<title>WGJ Website</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: white;
+			font-family: Arial, sans-serif;
+		}
 
-      #character {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    </style>
-  </head>
-  <body>
-    <button id="audio-btn">Press me!</button>
-    <img id="character" src="" />
+		#audio-btn {
+			display: block;
+			margin: 0 auto;
+			font-size: 3em;
+			padding: 50px;
+			border-radius: 50%;
+			background-color: blue;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
 
-    <script>
-      const audioBtn = document.getElementById("audio-btn");
-      const audio1 = new Audio("WGJ.opus");
-      const audio2 = new Audio("WGJ 2.mp3");
+		.image-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
 
-      const images = [
-        "ZYZZ CAT TRUE FORM_1.1.1_3.1.1.png",
-        "Capybulkra.png",
-        "duxter.png",
-      ];
-      let currentImage = 0;
-      setInterval(() => {
-        document.getElementById("character").src = images[currentImage];
-        currentImage = (currentImage + 1) % images.length;
-      }, 2000);
+		.image-container img {
+			position: absolute;
+			top: -50%;
+			animation: roll 10s infinite linear;
+		}
 
-      audioBtn.addEventListener("click", () => {
-        const randomAudio = Math.random() < 0.5 ? audio1 : audio2;
-        randomAudio.play();
-      });
-    </script>
-  </body>
+		@keyframes roll {
+			from {
+				transform: translateY(0);
+			}
+			to {
+				transform: translateY(100%);
+			}
+		}
+	</style>
+</head>
+<body>
+	<button id="audio-btn">Jim?</button>
+	<div class="image-container">
+		<img src="Capybulkra.png" />
+		<img src="duxter.png" />
+		<img src="ZYZZ CAT TRUE FORM_1.1.1_3.1.1.png" />
+	</div>
+
+	<script>
+		const audioBtn = document.getElementById("audio-btn");
+		const audioFiles = ["WGJ.opus", "WGJ 2.mp3"];
+
+		audioBtn.addEventListener("click", () => {
+			const audioFile = audioFiles[Math.floor(Math.random() * audioFiles.length)];
+			const audio = new Audio(audioFile);
+			audio.play();
+		});
+	</script>
+</body>
 </html>
